@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atama — 8 İyun 2026</title>
+<title>Canım Atama — 8 İyun 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:    #0a0505;
-    --red:   #c0392b;
-    --red2:  #e05a4a;
-    --gold:  #d4af6a;
-    --white: #f7f0e8;
-    --soft:  rgba(247,240,232,0.65);
-    --muted: rgba(247,240,232,0.32);
+    --bg:    #0c0c0c;
+    --red:   #d42b2b;
+    --red2:  #ff5a45;
+    --gold:  #c9963a;
+    --white: #f5f0ea;
+    --soft:  rgba(245,240,234,0.68);
+    --muted: rgba(245,240,234,0.30);
   }
 
   html { scroll-behavior: smooth; }
@@ -25,7 +25,6 @@
     background-color: var(--bg);
     color: var(--white);
     overflow-x: hidden;
-    cursor: default;
   }
 
   /* ── GRAIN ── */
@@ -33,90 +32,64 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 999;
-    opacity: 0.5;
   }
 
   /* ── HERO ── */
   .hero {
-    min-height: 100svh; /* svh = safe viewport height on mobile */
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 80px 20px 100px;
+    padding: 60px 24px 80px;
     overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 55% at 50% 30%, rgba(160,30,20,0.28) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 80% 80%, rgba(212,175,106,0.08) 0%, transparent 60%),
-      #0a0505;
-    z-index: 0;
-  }
-
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 2px,
-      rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px
-    );
+    /* No brown/muddy gradient — clean dark with sharp red glow */
+    background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(180,20,20,0.22) 0%, transparent 65%), #0c0c0c;
   }
 
   .date-stamp {
-    position: relative;
-    z-index: 1;
-    font-size: clamp(0.6rem, 2.2vw, 0.72rem);
-    letter-spacing: 0.32em;
+    font-size: clamp(0.6rem, 2vw, 0.7rem);
+    letter-spacing: 0.36em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
+    animation: fadeUp 0.7s 0.15s forwards;
   }
 
   .hero-title {
-    position: relative;
-    z-index: 1;
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(2.6rem, 11vw, 7rem);
+    font-size: clamp(2.8rem, 12vw, 7rem);
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.0;
     text-align: center;
     color: var(--white);
     opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-    word-break: keep-all;
+    animation: fadeUp 0.7s 0.3s forwards;
   }
 
   .hero-title em {
     display: block;
     font-style: italic;
     font-weight: 400;
-    font-size: 0.5em;
+    font-size: 0.48em;
     color: var(--red2);
     margin-top: 10px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
   }
 
   .divider {
-    position: relative;
-    z-index: 1;
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin: 32px 0;
+    gap: 12px;
+    margin: 28px 0 24px;
+    width: min(280px, 75vw);
     opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-    width: min(320px, 80vw);
+    animation: fadeUp 0.7s 0.45s forwards;
   }
 
   .divider-line {
@@ -129,78 +102,70 @@
   }
 
   .divider-heart {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     animation: beat 2s ease-in-out infinite;
     flex-shrink: 0;
   }
 
   @keyframes beat {
     0%, 100% { transform: scale(1); }
-    30%       { transform: scale(1.25); }
-    60%       { transform: scale(1.1); }
+    30%  { transform: scale(1.3); }
+    60%  { transform: scale(1.1); }
   }
 
   .hero-subtitle {
-    position: relative;
-    z-index: 1;
-    font-size: clamp(0.95rem, 3.5vw, 1.22rem);
+    font-size: clamp(1rem, 3.5vw, 1.18rem);
     font-weight: 300;
     font-style: italic;
     color: var(--soft);
     text-align: center;
-    max-width: 440px;
-    line-height: 1.75;
-    padding: 0 8px;
+    max-width: 400px;
+    line-height: 1.7;
     opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
+    animation: fadeUp 0.7s 0.6s forwards;
   }
 
   .scroll-hint {
     position: absolute;
-    bottom: 28px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.4s forwards;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.62rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    gap: 6px;
+    opacity: 0;
+    animation: fadeUp 0.7s 1.2s forwards;
   }
 
   .scroll-arrow {
     width: 1px;
-    height: 36px;
+    height: 32px;
     background: linear-gradient(to bottom, var(--gold), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
   }
 
   @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50%       { opacity: 1;   transform: scaleY(1.2); }
+    0%, 100% { opacity: 0.35; }
+    50%  { opacity: 1; }
   }
 
-  /* ── LETTER SECTION ── */
+  /* ── CONTENT ── */
   .letter-section {
-    max-width: 680px;
+    max-width: 660px;
     margin: 0 auto;
-    padding: 72px 24px 80px;
+    padding: 52px 22px 60px;
   }
 
   .section-label {
-    font-size: clamp(0.6rem, 2vw, 0.68rem);
-    letter-spacing: 0.38em;
+    font-size: clamp(0.58rem, 1.8vw, 0.66rem);
+    letter-spacing: 0.4em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 40px;
+    margin-bottom: 36px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
   }
 
   .section-label::after {
@@ -210,18 +175,17 @@
     background: linear-gradient(to right, var(--gold), transparent);
   }
 
-  /* ── RULES ── */
   .rules-grid { display: grid; gap: 0; }
 
   .rule-item {
     display: grid;
-    grid-template-columns: 52px 1fr;
-    gap: 0 24px;
-    padding: 44px 0;
-    border-top: 1px solid rgba(212,175,106,0.13);
+    grid-template-columns: 48px 1fr;
+    gap: 0 20px;
+    padding: 36px 0;
+    border-top: 1px solid rgba(201,150,58,0.15);
     opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s, transform 0.7s;
+    transform: translateY(24px);
+    transition: opacity 0.65s, transform 0.65s;
   }
 
   .rule-item.visible {
@@ -231,21 +195,21 @@
 
   .rule-number {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-size: clamp(2rem, 6vw, 3rem);
     font-weight: 700;
-    color: rgba(192,57,43,0.22);
+    color: rgba(212,43,43,0.2);
     line-height: 1;
     text-align: right;
-    padding-top: 4px;
+    padding-top: 3px;
     user-select: none;
   }
 
   .rule-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.15rem, 4.5vw, 1.6rem);
+    font-size: clamp(1.15rem, 4vw, 1.55rem);
     font-weight: 400;
     color: var(--white);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     line-height: 1.25;
   }
 
@@ -255,7 +219,7 @@
   }
 
   .rule-text {
-    font-size: clamp(0.98rem, 3.2vw, 1.1rem);
+    font-size: clamp(1rem, 3vw, 1.1rem);
     font-weight: 300;
     color: var(--soft);
     line-height: 1.8;
@@ -269,31 +233,22 @@
   /* ── FINALE ── */
   .finale {
     position: relative;
-    padding: 80px 24px 100px;
+    padding: 60px 22px 80px;
     text-align: center;
-    overflow: hidden;
-  }
-
-  .finale-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 65% 75% at 50% 50%, rgba(140,20,15,0.22) 0%, transparent 70%);
+    background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(160,15,15,0.18) 0%, transparent 70%);
   }
 
   .finale-quote {
-    position: relative;
-    z-index: 1;
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.3rem, 5.5vw, 2.8rem);
+    font-size: clamp(1.25rem, 5vw, 2.6rem);
     font-weight: 400;
     font-style: italic;
     line-height: 1.45;
     color: var(--white);
-    max-width: 600px;
-    margin: 0 auto 44px;
-    padding: 0 4px;
+    max-width: 580px;
+    margin: 0 auto 36px;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
     transition: opacity 0.8s, transform 0.8s;
   }
 
@@ -305,18 +260,16 @@
   .finale-quote::before {
     content: '"';
     display: block;
-    font-size: 4.5rem;
-    line-height: 0.6;
-    color: rgba(192,57,43,0.35);
-    margin-bottom: 20px;
+    font-size: 4rem;
+    line-height: 0.55;
+    color: rgba(212,43,43,0.38);
+    margin-bottom: 18px;
   }
 
   .finale-sig {
-    position: relative;
-    z-index: 1;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s 0.3s, transform 0.8s 0.3s;
+    transform: translateY(16px);
+    transition: opacity 0.8s 0.28s, transform 0.8s 0.28s;
   }
 
   .finale-sig.visible {
@@ -326,20 +279,20 @@
 
   .sig-name {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-size: clamp(1.1rem, 3.8vw, 1.45rem);
     font-style: italic;
     color: var(--gold);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .sig-date {
-    font-size: clamp(0.62rem, 2vw, 0.73rem);
+    font-size: clamp(0.58rem, 1.8vw, 0.7rem);
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--muted);
   }
 
-  /* ── FLOATING HEARTS ── */
+  /* ── HEARTS ── */
   .hearts-container {
     position: fixed;
     inset: 0;
@@ -350,41 +303,39 @@
 
   .float-heart {
     position: absolute;
-    bottom: -60px;
+    bottom: -50px;
     opacity: 0;
     animation: floatUp linear forwards;
   }
 
   @keyframes floatUp {
     0%   { transform: translateY(0) rotate(0deg);       opacity: 0; }
-    10%  { opacity: 0.55; }
-    90%  { opacity: 0.25; }
+    10%  { opacity: 0.5; }
+    90%  { opacity: 0.2; }
     100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
   }
 
-  /* ── BOTTOM ── */
+  /* ── FOOTER ── */
   .bottom-ornament {
     text-align: center;
-    padding: 32px 20px;
-    border-top: 1px solid rgba(212,175,106,0.13);
+    padding: 28px 20px;
+    border-top: 1px solid rgba(201,150,58,0.12);
     color: var(--muted);
-    font-size: clamp(0.6rem, 2vw, 0.73rem);
+    font-size: clamp(0.58rem, 1.8vw, 0.7rem);
     letter-spacing: 0.22em;
     text-transform: uppercase;
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── MOBILE ── */
-  @media (max-width: 400px) {
-    .hero-title { font-size: clamp(2.2rem, 13vw, 3rem); }
-    .rule-item  { grid-template-columns: 36px 1fr; gap: 0 16px; }
-    .rule-number { font-size: 1.8rem; }
-    .letter-section { padding: 56px 16px 64px; }
-    .finale { padding: 60px 16px 80px; }
+  @media (max-width: 380px) {
+    .hero { padding: 50px 18px 70px; }
+    .rule-item { grid-template-columns: 32px 1fr; gap: 0 14px; }
+    .rule-number { font-size: 1.6rem; }
+    .letter-section { padding: 44px 16px 52px; }
   }
 </style>
 </head>
@@ -393,7 +344,6 @@
 <div class="hearts-container" id="heartsContainer"></div>
 
 <section class="hero">
-  <div class="hero-bg"></div>
   <p class="date-stamp">8 İyun 2026 &nbsp;·&nbsp; Ad Günün Mübarək</p>
   <h1 class="hero-title">
     Atamdan<br>Öyrəndiklərim
@@ -405,50 +355,34 @@
     <span class="divider-line right"></span>
   </div>
   <p class="hero-subtitle">Bəzən ən dərin sevgi ən az sözlə ifadə olunur. Amma bu gün, hər şeyi demək istəyirəm.</p>
-  <div class="scroll-hint">
-    <div class="scroll-arrow"></div>
-  </div>
+  <div class="scroll-hint"><div class="scroll-arrow"></div></div>
 </section>
 
 <section class="letter-section">
   <div class="section-label">Sənin Qızının Gözündən</div>
-
   <div class="rules-grid">
 
     <article class="rule-item" data-delay="0">
       <div class="rule-number">01</div>
       <div class="rule-content">
         <h2 class="rule-title">Səssiz &amp; <em>Məğrur Güc</em></h2>
-        <p class="rule-text">
-          Əsl güc çox səsli olmur — bunu sənin hər addımından öyrəndim.
-          Çətin anlarda şikayət etmirsən, dözürsən, çalışırsan.
-          <span class="highlight">Həyatda dik durmağı mənə sən öyrətdin.</span>
-          Sənin səssiz qüdrətin mənim üçün ən böyük nümunədir.
-        </p>
+        <p class="rule-text">Əsl güc çox səsli olmur — bunu sənin hər addımından öyrəndim. Çətin anlarda şikayət etmirsən, dözürsən, çalışırsan. <span class="highlight">Həyatda dik durmağı mənə sən öyrətdin.</span> Sənin səssiz qüdrətin mənim üçün ən böyük nümunədir.</p>
       </div>
     </article>
 
-    <article class="rule-item" data-delay="150">
+    <article class="rule-item" data-delay="120">
       <div class="rule-number">02</div>
       <div class="rule-content">
         <h2 class="rule-title">Mənim <em>Ən Böyük Şansım</em></h2>
-        <p class="rule-text">
-          Dərslər bəzən çox ağır olur. Amma <span class="highlight">sənin mənimlə fəxr etdiyini düşünmək</span> mənə dünyada başqa heç bir şeyin verə bilmədiyi gücü verir.
-          Sənin qızın olmaq — bu mənim üçün həyatın ən böyük hədiyyəsidir.
-        </p>
+        <p class="rule-text">Dərslər bəzən çox ağır olur. Amma <span class="highlight">sənin mənimlə fəxr etdiyini düşünmək</span> mənə dünyada başqa heç bir şeyin verə bilmədiyi gücü verir. Sənin qızın olmaq — bu mənim üçün həyatın ən böyük hədiyyəsidir.</p>
       </div>
     </article>
 
-    <article class="rule-item" data-delay="300">
+    <article class="rule-item" data-delay="240">
       <div class="rule-number">03</div>
       <div class="rule-content">
         <h2 class="rule-title">Sözlə Deyil, <em>Əməllə Sevmək</em></h2>
-        <p class="rule-text">
-          Hər gün "səni sevirəm" deməyə bilərsən — amma mən sənin sevgini
-          <span class="highlight">hər an, hər anımda hiss edirəm.</span>
-          Fədakarlığı, qayğını, əməli sevgini — bunları mənə sən öyrətdin.
-          Sən mənim şapşik atamsan 😊 və mən bu dünyada ən xoşbəxt insanam.
-        </p>
+        <p class="rule-text">Hər gün "səni sevirəm" deməyə bilərsən — amma mən sənin sevgini <span class="highlight">hər an, hər anımda hiss edirəm.</span> Fədakarlığı, qayğını, əməli sevgini — bunları mənə sən öyrətdin. Sən mənim şapşik atamsan 😊 və mən bu dünyada ən xoşbəxt insanam.</p>
       </div>
     </article>
 
@@ -456,49 +390,45 @@
 </section>
 
 <section class="finale">
-  <div class="finale-bg"></div>
-  <p class="finale-quote" id="finaleQuote">
-    Canım atam sənin qızın olduğum üçün çox, çox, çox şanslıyam. Yaxşı ki varsan. Yaxşı ki mənim atamsan. Ad günün mübarək :)
-  </p>
+  <p class="finale-quote" id="finaleQuote">Canım atam sənin qızın olduğum üçün çox, çox, çox şanslıyam. Yaxşı ki varsan. Yaxşı ki mənim atamsan. Ad günün mübarək :)</p>
   <div class="finale-sig" id="finaleSig">
     <p class="sig-name">Sonsuz sevgi ilə, Təhminə ❤️</p>
     <p class="sig-date">8 İyun 2026</p>
   </div>
 </section>
 
-<div class="bottom-ornament">Zaur Əliyevə özəl olaraq qızından</div>
+<div class="bottom-ornament">Sənin kimi dady bir dənədi o da məndədi</div>
 
 <script>
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = entry.target.dataset.delay || 0;
-        setTimeout(() => entry.target.classList.add('visible'), +delay);
-        observer.unobserve(entry.target);
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), +(e.target.dataset.delay || 0));
+        observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.12 });
 
   document.querySelectorAll('.rule-item, .finale-quote, .finale-sig').forEach(el => observer.observe(el));
 
-  const heartSymbols = ['❤️','🤍','💛','♥','❣️'];
+  const symbols = ['❤️','🤍','💛','♥','❣️'];
   const container = document.getElementById('heartsContainer');
 
   function spawnHeart() {
     const h = document.createElement('span');
     h.className = 'float-heart';
-    h.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+    h.textContent = symbols[Math.floor(Math.random() * symbols.length)];
     h.style.left = Math.random() * 100 + 'vw';
-    const duration = 8 + Math.random() * 10;
-    const delay    = Math.random() * 4;
-    h.style.fontSize  = (0.8 + Math.random() * 1.1) + 'rem';
-    h.style.animation = `floatUp ${duration}s ${delay}s linear forwards`;
+    const dur = 9 + Math.random() * 9;
+    const del = Math.random() * 3;
+    h.style.fontSize = (0.75 + Math.random()) + 'rem';
+    h.style.animation = `floatUp ${dur}s ${del}s linear forwards`;
     container.appendChild(h);
-    setTimeout(() => h.remove(), (duration + delay) * 1000 + 200);
+    setTimeout(() => h.remove(), (dur + del) * 1000 + 100);
   }
 
   for (let i = 0; i < 5; i++) spawnHeart();
-  setInterval(spawnHeart, 2400);
+  setInterval(spawnHeart, 2500);
 </script>
 </body>
 </html>
