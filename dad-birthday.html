@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atama — 8 İyun 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:    #0a0505;
+    --red:   #c0392b;
+    --red2:  #e05a4a;
+    --gold:  #d4af6a;
+    --white: #f7f0e8;
+    --soft:  rgba(247,240,232,0.65);
+    --muted: rgba(247,240,232,0.32);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background-color: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── GRAIN ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh; /* svh = safe viewport height on mobile */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 80px 20px 100px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 30%, rgba(160,30,20,0.28) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 80%, rgba(212,175,106,0.08) 0%, transparent 60%),
+      #0a0505;
+    z-index: 0;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px
+    );
+  }
+
+  .date-stamp {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(0.6rem, 2.2vw, 0.72rem);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.6rem, 11vw, 7rem);
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+    word-break: keep-all;
+  }
+
+  .hero-title em {
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.5em;
+    color: var(--red2);
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .divider {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 32px 0;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+    width: min(320px, 80vw);
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .divider-line.right {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+
+  .divider-heart {
+    font-size: 1.3rem;
+    animation: beat 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes beat {
+    0%, 100% { transform: scale(1); }
+    30%       { transform: scale(1.25); }
+    60%       { transform: scale(1.1); }
+  }
+
+  .hero-subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(0.95rem, 3.5vw, 1.22rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--soft);
+    text-align: center;
+    max-width: 440px;
+    line-height: 1.75;
+    padding: 0 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.4s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.2); }
+  }
+
+  /* ── LETTER SECTION ── */
+  .letter-section {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 24px 80px;
+  }
+
+  .section-label {
+    font-size: clamp(0.6rem, 2vw, 0.68rem);
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  /* ── RULES ── */
+  .rules-grid { display: grid; gap: 0; }
+
+  .rule-item {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0 24px;
+    padding: 44px 0;
+    border-top: 1px solid rgba(212,175,106,0.13);
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .rule-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .rule-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 700;
+    color: rgba(192,57,43,0.22);
+    line-height: 1;
+    text-align: right;
+    padding-top: 4px;
+    user-select: none;
+  }
+
+  .rule-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.15rem, 4.5vw, 1.6rem);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+
+  .rule-title em {
+    font-style: italic;
+    color: var(--red2);
+  }
+
+  .rule-text {
+    font-size: clamp(0.98rem, 3.2vw, 1.1rem);
+    font-weight: 300;
+    color: var(--soft);
+    line-height: 1.8;
+  }
+
+  .rule-text .highlight {
+    color: var(--white);
+    font-style: italic;
+  }
+
+  /* ── FINALE ── */
+  .finale {
+    position: relative;
+    padding: 80px 24px 100px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .finale-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 65% 75% at 50% 50%, rgba(140,20,15,0.22) 0%, transparent 70%);
+  }
+
+  .finale-quote {
+    position: relative;
+    z-index: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 5.5vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--white);
+    max-width: 600px;
+    margin: 0 auto 44px;
+    padding: 0 4px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+
+  .finale-quote.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .finale-quote::before {
+    content: '"';
+    display: block;
+    font-size: 4.5rem;
+    line-height: 0.6;
+    color: rgba(192,57,43,0.35);
+    margin-bottom: 20px;
+  }
+
+  .finale-sig {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.3s, transform 0.8s 0.3s;
+  }
+
+  .finale-sig.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .sig-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .sig-date {
+    font-size: clamp(0.62rem, 2vw, 0.73rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── FLOATING HEARTS ── */
+  .hearts-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  .float-heart {
+    position: absolute;
+    bottom: -60px;
+    opacity: 0;
+    animation: floatUp linear forwards;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg);       opacity: 0; }
+    10%  { opacity: 0.55; }
+    90%  { opacity: 0.25; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ── BOTTOM ── */
+  .bottom-ornament {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid rgba(212,175,106,0.13);
+    color: var(--muted);
+    font-size: clamp(0.6rem, 2vw, 0.73rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 400px) {
+    .hero-title { font-size: clamp(2.2rem, 13vw, 3rem); }
+    .rule-item  { grid-template-columns: 36px 1fr; gap: 0 16px; }
+    .rule-number { font-size: 1.8rem; }
+    .letter-section { padding: 56px 16px 64px; }
+    .finale { padding: 60px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hearts-container" id="heartsContainer"></div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="date-stamp">8 İyun 2026 &nbsp;·&nbsp; Ad Günün Mübarək</p>
+  <h1 class="hero-title">
+    Atamdan<br>Öyrəndiklərim
+    <em>Ən Sevdiyi Qızından</em>
+  </h1>
+  <div class="divider">
+    <span class="divider-line"></span>
+    <span class="divider-heart">❤️</span>
+    <span class="divider-line right"></span>
+  </div>
+  <p class="hero-subtitle">Bəzən ən dərin sevgi ən az sözlə ifadə olunur. Amma bu gün, hər şeyi demək istəyirəm.</p>
+  <div class="scroll-hint">
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<section class="letter-section">
+  <div class="section-label">Sənin Qızının Gözündən</div>
+
+  <div class="rules-grid">
+
+    <article class="rule-item" data-delay="0">
+      <div class="rule-number">01</div>
+      <div class="rule-content">
+        <h2 class="rule-title">Səssiz &amp; <em>Məğrur Güc</em></h2>
+        <p class="rule-text">
+          Əsl güc çox səsli olmur — bunu sənin hər addımından öyrəndim.
+          Çətin anlarda şikayət etmirsən, dözürsən, çalışırsan.
+          <span class="highlight">Həyatda dik durmağı mənə sən öyrətdin.</span>
+          Sənin səssiz qüdrətin mənim üçün ən böyük nümunədir.
+        </p>
+      </div>
+    </article>
+
+    <article class="rule-item" data-delay="150">
+      <div class="rule-number">02</div>
+      <div class="rule-content">
+        <h2 class="rule-title">Mənim <em>Ən Böyük Şansım</em></h2>
+        <p class="rule-text">
+          Dərslər bəzən çox ağır olur. Amma <span class="highlight">sənin mənimlə fəxr etdiyini düşünmək</span> mənə dünyada başqa heç bir şeyin verə bilmədiyi gücü verir.
+          Sənin qızın olmaq — bu mənim üçün həyatın ən böyük hədiyyəsidir.
+        </p>
+      </div>
+    </article>
+
+    <article class="rule-item" data-delay="300">
+      <div class="rule-number">03</div>
+      <div class="rule-content">
+        <h2 class="rule-title">Sözlə Deyil, <em>Əməllə Sevmək</em></h2>
+        <p class="rule-text">
+          Hər gün "səni sevirəm" deməyə bilərsən — amma mən sənin sevgini
+          <span class="highlight">hər an, hər anımda hiss edirəm.</span>
+          Fədakarlığı, qayğını, əməli sevgini — bunları mənə sən öyrətdin.
+          Sən mənim şapşik atamsan 😊 və mən bu dünyada ən xoşbəxt insanam.
+        </p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="finale">
+  <div class="finale-bg"></div>
+  <p class="finale-quote" id="finaleQuote">
+    Canım atam sənin qızın olduğum üçün çox, çox, çox şanslıyam. Yaxşı ki varsan. Yaxşı ki mənim atamsan. Ad günün mübarək :)
+  </p>
+  <div class="finale-sig" id="finaleSig">
+    <p class="sig-name">Sonsuz sevgi ilə, Təhminə ❤️</p>
+    <p class="sig-date">8 İyun 2026</p>
+  </div>
+</section>
+
+<div class="bottom-ornament">Zaur Əliyevə özəl olaraq qızından</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => entry.target.classList.add('visible'), +delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.rule-item, .finale-quote, .finale-sig').forEach(el => observer.observe(el));
+
+  const heartSymbols = ['❤️','🤍','💛','♥','❣️'];
+  const container = document.getElementById('heartsContainer');
+
+  function spawnHeart() {
+    const h = document.createElement('span');
+    h.className = 'float-heart';
+    h.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    const duration = 8 + Math.random() * 10;
+    const delay    = Math.random() * 4;
+    h.style.fontSize  = (0.8 + Math.random() * 1.1) + 'rem';
+    h.style.animation = `floatUp ${duration}s ${delay}s linear forwards`;
+    container.appendChild(h);
+    setTimeout(() => h.remove(), (duration + delay) * 1000 + 200);
+  }
+
+  for (let i = 0; i < 5; i++) spawnHeart();
+  setInterval(spawnHeart, 2400);
+</script>
+</body>
+</html>
