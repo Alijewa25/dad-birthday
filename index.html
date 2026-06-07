@@ -4,93 +4,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Canım Atama — 8 İyun 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --black:  #000000;
-  --red:    #da1a32;
-  --ember:  #a00c30;
-  --white:  #ffffff;
-  --soft:   rgba(255,255,255,0.70);
-  --muted:  rgba(255,255,255,0.32);
-  --border: rgba(218,26,50,0.22);
+  --bg:    #08080f;
+  --acc1:  #ff2d55;   /* canlı çəhrayı-qırmızı */
+  --acc2:  #ff9f0a;   /* isti amber/narıncı */
+  --gold:  #ffd60a;   /* parlaq sarı-qızılı */
+  --white: #ffffff;
+  --soft:  rgba(255,255,255,0.68);
+  --muted: rgba(255,255,255,0.30);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--black);
+  background: var(--bg);
   color: var(--white);
   overflow-x: hidden;
 }
 
-/* subtle grain */
+/* grain */
 body::after {
   content: '';
   position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
   pointer-events: none; z-index: 9999;
 }
 
-/* ══════════════════════════════
-   HERO
-══════════════════════════════ */
+/* ══════════════════════
+   HERO — no wasted space
+══════════════════════ */
 .hero {
   min-height: 100svh;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  position: relative;
-  overflow: hidden;
-}
-
-/* big red accent block — top right */
-.hero-accent {
-  position: absolute;
-  top: 0; right: 0;
-  width: 42%;
-  height: 100%;
-  background: linear-gradient(160deg, var(--red) 0%, var(--ember) 100%);
-  clip-path: polygon(28% 0%, 100% 0%, 100% 100%, 0% 100%);
-  z-index: 0;
-}
-
-/* radial glow over accent */
-.hero-accent::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 70% 40%, rgba(255,255,255,0.08) 0%, transparent 60%);
-}
-
-.hero-main {
-  position: relative; z-index: 2;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: 56px 24px 24px;
+  padding: 48px 22px 56px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
   gap: 0;
 }
 
+/* gradient orb behind title */
+.hero-orb {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  width: min(500px, 130vw);
+  height: min(500px, 130vw);
+  background: radial-gradient(ellipse,
+    rgba(255,45,85,0.30) 0%,
+    rgba(255,159,10,0.12) 45%,
+    transparent 70%);
+  pointer-events: none;
+}
+
 .date-stamp {
-  font-size: 0.62rem;
-  letter-spacing: 0.42em;
+  font-size: 0.65rem;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 20px;
+  color: var(--acc2);
+  margin-bottom: 18px;
   opacity: 0;
   animation: up 0.6s 0.1s forwards;
+  position: relative; z-index: 2;
 }
 
 .hero-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2.9rem, 11.5vw, 6rem);
+  font-size: clamp(2.8rem, 12vw, 6.5rem);
   font-weight: 700;
-  line-height: 0.95;
+  line-height: 0.96;
   color: var(--white);
   opacity: 0;
   animation: up 0.6s 0.22s forwards;
+  position: relative; z-index: 2;
 }
 
 .hero-title em {
@@ -98,9 +92,12 @@ body::after {
   font-style: italic;
   font-weight: 400;
   font-size: 0.46em;
-  color: var(--red);
-  margin-top: 12px;
-  line-height: 1.1;
+  background: linear-gradient(90deg, var(--acc1), var(--acc2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 10px;
+  letter-spacing: 0.02em;
 }
 
 .divider {
@@ -111,14 +108,17 @@ body::after {
   margin: 22px 0 20px;
   opacity: 0;
   animation: up 0.6s 0.36s forwards;
+  position: relative; z-index: 2;
 }
+
 .dline {
   flex: 1; height: 1px;
-  background: linear-gradient(to right, transparent, rgba(218,26,50,0.6));
+  background: linear-gradient(to right, transparent, rgba(255,214,10,0.5));
 }
 .dline.r {
-  background: linear-gradient(to left, transparent, rgba(218,26,50,0.6));
+  background: linear-gradient(to left, transparent, rgba(255,214,10,0.5));
 }
+
 .dheart {
   font-size: 1.2rem;
   animation: beat 2s ease-in-out infinite;
@@ -130,81 +130,43 @@ body::after {
 }
 
 .hero-sub {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
-  font-style: italic;
+  font-size: clamp(0.95rem, 3.6vw, 1.12rem);
   font-weight: 300;
+  font-style: italic;
   color: var(--soft);
-  max-width: 340px;
+  max-width: 360px;
   line-height: 1.68;
   opacity: 0;
   animation: up 0.6s 0.48s forwards;
-}
-
-/* ── SCROLL INDICATOR ── */
-.scroll-indicator {
   position: relative; z-index: 2;
-  padding: 20px 24px 32px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  font-family: 'Playfair Display', serif;
+}
+
+/* tiny scroll indicator — no extra space */
+.scroll-dot {
+  margin-top: 36px;
   opacity: 0;
-  animation: up 0.6s 1.1s forwards;
+  animation: up 0.6s 1s forwards;
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
 }
 
-.scroll-track {
-  width: 36px; height: 20px;
-  border: 1.5px solid rgba(218,26,50,0.5);
-  border-radius: 10px;
-  position: relative;
-  flex-shrink: 0;
+.scroll-dot span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--acc1);
+  animation: blink 1.6s ease-in-out infinite;
 }
-.scroll-thumb {
-  width: 8px; height: 8px;
-  background: var(--red);
-  border-radius: 50%;
-  position: absolute;
-  top: 4px; left: 4px;
-  animation: scrollDown 1.8s ease-in-out infinite;
-}
-@keyframes scrollDown {
-  0%,100% { top: 4px; opacity: 1; }
-  60%     { top: 14px; opacity: 0.4; }
+.scroll-dot span:nth-child(2) { animation-delay: 0.2s; opacity: 0.6; }
+.scroll-dot span:nth-child(3) { animation-delay: 0.4s; opacity: 0.3; }
+
+@keyframes blink {
+  0%,100% { transform: scaleY(1); }
+  50%     { transform: scaleY(1.6); }
 }
 
-.scroll-label {
-  font-size: 0.58rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* red bar decoration right side of hero */
-.hero-bar {
-  position: absolute;
-  right: 16px; top: 50%;
-  transform: translateY(-50%);
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  opacity: 0;
-  animation: up 0.6s 0.8s forwards;
-}
-.hero-bar span {
-  display: block;
-  width: 3px;
-  background: var(--white);
-  border-radius: 2px;
-  opacity: 0.5;
-}
-.hero-bar span:nth-child(1) { height: 28px; opacity: 0.9; }
-.hero-bar span:nth-child(2) { height: 14px; opacity: 0.5; }
-.hero-bar span:nth-child(3) { height: 8px;  opacity: 0.25; }
-
-/* ══════════════════════════════
+/* ══════════════════════
    CONTENT
-══════════════════════════════ */
+══════════════════════ */
 .content {
   max-width: 640px;
   margin: 0 auto;
@@ -212,36 +174,39 @@ body::after {
 }
 
 .tag {
-  font-size: 0.58rem;
-  letter-spacing: 0.44em;
+  font-size: 0.6rem;
+  letter-spacing: 0.42em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--gold);
   margin-bottom: 32px;
   display: flex; align-items: center; gap: 12px;
 }
 .tag::after {
   content: ''; flex: 1; height: 1px;
-  background: linear-gradient(to right, var(--border), transparent);
+  background: linear-gradient(to right, rgba(255,214,10,0.4), transparent);
 }
 
 .rule {
-  padding: 30px 0;
-  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  border-top: 1px solid rgba(255,45,85,0.15);
   display: grid;
   grid-template-columns: 44px 1fr;
   gap: 0 18px;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(22px);
   transition: opacity 0.55s, transform 0.55s;
 }
 .rule.visible { opacity: 1; transform: translateY(0); }
 
 .num {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.7rem, 5.5vw, 2.6rem);
+  font-size: clamp(1.7rem, 5.5vw, 2.8rem);
   font-weight: 700;
-  color: var(--ember);
-  opacity: 0.35;
+  background: linear-gradient(135deg, var(--acc1), var(--acc2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.28;
   line-height: 1;
   text-align: right;
   padding-top: 2px;
@@ -250,7 +215,7 @@ body::after {
 
 .rule-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.12rem, 4.2vw, 1.48rem);
+  font-size: clamp(1.15rem, 4.2vw, 1.5rem);
   font-weight: 400;
   color: var(--white);
   margin-bottom: 9px;
@@ -258,14 +223,17 @@ body::after {
 }
 .rule-title em {
   font-style: italic;
-  color: var(--red);
+  background: linear-gradient(90deg, var(--acc1), var(--acc2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .rule-text {
-  font-size: clamp(0.95rem, 3.3vw, 1.04rem);
+  font-size: clamp(0.97rem, 3.3vw, 1.05rem);
   font-weight: 300;
   color: var(--soft);
-  line-height: 1.8;
+  line-height: 1.78;
 }
 .rule-text strong {
   color: var(--white);
@@ -273,52 +241,58 @@ body::after {
   font-style: italic;
 }
 
-/* ══════════════════════════════
+/* ══════════════════════
    FINALE
-══════════════════════════════ */
+══════════════════════ */
 .finale {
-  padding: 0 20px 72px;
+  padding: 56px 20px 76px;
   text-align: center;
-  position: relative;
-}
-
-/* full-width red band */
-.finale-band {
-  background: linear-gradient(135deg, var(--ember) 0%, var(--red) 100%);
-  padding: 52px 24px;
-  margin-bottom: 48px;
   position: relative;
   overflow: hidden;
 }
-.finale-band::before {
+.finale::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%);
+  background: radial-gradient(ellipse 90% 80% at 50% 50%,
+    rgba(255,45,85,0.13) 0%, transparent 68%);
+  pointer-events: none;
 }
+
+.fin-divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 0 auto 44px;
+  width: min(220px, 60vw);
+}
+.fin-divider .dline   { background: linear-gradient(to right, transparent, rgba(255,214,10,0.5)); }
+.fin-divider .dline.r { background: linear-gradient(to left, transparent, rgba(255,214,10,0.5)); }
 
 .fq {
   position: relative; z-index: 1;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.2rem, 5vw, 2.2rem);
+  font-size: clamp(1.25rem, 5.2vw, 2.4rem);
   font-style: italic; font-weight: 400;
-  line-height: 1.48;
+  line-height: 1.45;
   color: var(--white);
-  max-width: 540px;
-  margin: 0 auto;
-  opacity: 0; transform: translateY(18px);
+  max-width: 560px;
+  margin: 0 auto 40px;
+  opacity: 0; transform: translateY(20px);
   transition: opacity 0.7s, transform 0.7s;
 }
 .fq.visible { opacity: 1; transform: translateY(0); }
 
 .open-q {
   display: block;
-  font-size: 4rem; line-height: 0.55;
-  color: rgba(255,255,255,0.25);
-  margin-bottom: 16px;
+  font-size: 4.5rem; line-height: 0.5;
+  background: linear-gradient(135deg, var(--acc1), var(--acc2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 18px;
   font-style: normal;
 }
 
 .sig {
+  position: relative; z-index: 1;
   opacity: 0; transform: translateY(14px);
   transition: opacity 0.7s 0.2s, transform 0.7s 0.2s;
 }
@@ -328,48 +302,59 @@ body::after {
   font-family: 'Playfair Display', serif;
   font-size: clamp(1.1rem, 3.8vw, 1.4rem);
   font-style: italic;
-  color: var(--white);
+  background: linear-gradient(90deg, var(--gold), var(--acc2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 6px;
 }
 .sig-date {
   font-size: 0.6rem;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: var(--muted);
 }
 
+/* ══════════════════════
+   FOOTER
+══════════════════════ */
 footer {
   text-align: center;
-  padding: 22px 20px;
-  border-top: 1px solid var(--border);
-  font-size: 0.58rem;
+  padding: 24px 20px;
+  border-top: 1px solid rgba(255,214,10,0.1);
+  font-size: 0.6rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-/* ══════════════════════════════
-   FLOATING HEARTS
-══════════════════════════════ */
-.hearts { position: fixed; inset: 0; pointer-events: none; z-index: 500; overflow: hidden; }
-.fh { position: absolute; bottom: -50px; opacity: 0; }
+/* ══════════════════════
+   HEARTS
+══════════════════════ */
+.hearts {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 500; overflow: hidden;
+}
+.fh {
+  position: absolute; bottom: -50px; opacity: 0;
+}
 @keyframes fup {
-  0%   { transform: translateY(0) rotate(-6deg); opacity: 0; }
-  8%   { opacity: 0.6; }
+  0%   { transform: translateY(0) rotate(-8deg); opacity: 0; }
+  8%   { opacity: 0.65; }
   88%  { opacity: 0.2; }
-  100% { transform: translateY(-108vh) rotate(10deg); opacity: 0; }
+  100% { transform: translateY(-108vh) rotate(12deg); opacity: 0; }
 }
 
 @keyframes up {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* small phones */
 @media (max-width: 360px) {
-  .hero-title { font-size: clamp(2.5rem, 13.5vw, 3rem); }
+  .hero-title { font-size: clamp(2.4rem, 14vw, 3rem); }
   .rule { grid-template-columns: 32px 1fr; gap: 0 12px; }
   .num { font-size: 1.5rem; }
-  .hero-accent { width: 35%; }
 }
 </style>
 </head>
@@ -377,40 +362,31 @@ footer {
 
 <div class="hearts" id="hearts"></div>
 
-<!-- ══ HERO ══ -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-accent"></div>
-  <div class="hero-bar">
+  <div class="hero-orb"></div>
+
+  <p class="date-stamp">8 İyun 2026 · Ad Günün Mübarək</p>
+
+  <h1 class="hero-title">
+    Atamdan<br>Öyrəndiklərim
+    <em>Ən Sevdiyi Qızından</em>
+  </h1>
+
+  <div class="divider">
+    <span class="dline"></span>
+    <span class="dheart">❤️</span>
+    <span class="dline r"></span>
+  </div>
+
+  <p class="hero-sub">Bəzən ən dərin sevgi ən az sözlə ifadə olunur. Amma bu gün, hər şeyi demək istəyirəm.</p>
+
+  <div class="scroll-dot">
     <span></span><span></span><span></span>
-  </div>
-
-  <div class="hero-main">
-    <p class="date-stamp">8 İyun 2026 · Ad Günün Mübarək</p>
-
-    <h1 class="hero-title">
-      Atamdan<br>Öyrən&shy;diklərim
-      <em>Ən Sevdiyi Qızından</em>
-    </h1>
-
-    <div class="divider">
-      <span class="dline"></span>
-      <span class="dheart">❤️</span>
-      <span class="dline r"></span>
-    </div>
-
-    <p class="hero-sub">Bəzən ən dərin sevgi ən az sözlə ifadə olunur. Amma bu gün, hər şeyi demək istəyirəm.</p>
-  </div>
-
-  <!-- scroll cue — bottom of hero grid -->
-  <div class="scroll-indicator">
-    <div class="scroll-track">
-      <div class="scroll-thumb"></div>
-    </div>
-    <span class="scroll-label">Aşağı sürüşdür</span>
   </div>
 </section>
 
-<!-- ══ CONTENT ══ -->
+<!-- CONTENT -->
 <section class="content">
   <p class="tag">Sənin Qızının Gözündən</p>
 
@@ -439,14 +415,18 @@ footer {
   </article>
 </section>
 
-<!-- ══ FINALE ══ -->
+<!-- FINALE -->
 <section class="finale">
-  <div class="finale-band">
-    <p class="fq" id="fq">
-      <span class="open-q">"</span>
-      Canım atam — sənin qızın olduğum üçün çox, çox, çox şanslıyam. Yaxşı ki varsan. Yaxşı ki mənim atamsan. Ad günün mübarək 🎂
-    </p>
+  <div class="fin-divider">
+    <span class="dline"></span>
+    <span class="dheart">✨</span>
+    <span class="dline r"></span>
   </div>
+
+  <p class="fq" id="fq">
+    <span class="open-q">"</span>
+    Canım atam — sənin qızın olduğum üçün çox, çox, çox şanslıyam. Yaxşı ki varsan. Yaxşı ki mənim atamsan. Ad günün mübarək 🎂
+  </p>
 
   <div class="sig" id="sig">
     <p class="sig-name">Sonsuz sevgi ilə, Təhminə ❤️</p>
@@ -466,7 +446,7 @@ footer {
   }, { threshold: 0.1 });
   document.querySelectorAll('.rule, #fq, #sig').forEach(el => io.observe(el));
 
-  const H = ['❤️','🤍','❣️','♥'];
+  const H = ['❤️','🧡','💛','🤍','❣️'];
   const box = document.getElementById('hearts');
   function pop() {
     const h = document.createElement('span');
