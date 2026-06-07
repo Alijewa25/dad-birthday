@@ -3,502 +3,484 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atama — 8 İyun 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<title>Canım Atama — 8 İyun 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg:    #0a0505;
-    --red:   #c0392b;
-    --red2:  #e05a4a;
-    --gold:  #d4af6a;
-    --white: #f7f0e8;
-    --soft:  rgba(247,240,232,0.65);
-    --muted: rgba(247,240,232,0.32);
-  }
+:root {
+  --black:  #000000;
+  --red:    #da1a32;
+  --ember:  #a00c30;
+  --white:  #ffffff;
+  --soft:   rgba(255,255,255,0.70);
+  --muted:  rgba(255,255,255,0.32);
+  --border: rgba(218,26,50,0.22);
+}
 
-  html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; }
 
-  body {
-    font-family: 'Crimson Pro', Georgia, serif;
-    background-color: var(--bg);
-    color: var(--white);
-    overflow-x: hidden;
-    cursor: default;
-  }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
 
-  /* ── GRAIN ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.5;
-  }
+/* subtle grain */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999;
+}
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100svh; /* svh = safe viewport height on mobile */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 80px 20px 100px;
-    overflow: hidden;
-  }
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  position: relative;
+  overflow: hidden;
+}
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 55% at 50% 30%, rgba(160,30,20,0.28) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 80% 80%, rgba(212,175,106,0.08) 0%, transparent 60%),
-      #0a0505;
-    z-index: 0;
-  }
+/* big red accent block — top right */
+.hero-accent {
+  position: absolute;
+  top: 0; right: 0;
+  width: 42%;
+  height: 100%;
+  background: linear-gradient(160deg, var(--red) 0%, var(--ember) 100%);
+  clip-path: polygon(28% 0%, 100% 0%, 100% 100%, 0% 100%);
+  z-index: 0;
+}
 
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 2px,
-      rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px
-    );
-  }
+/* radial glow over accent */
+.hero-accent::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
 
-  .date-stamp {
-    position: relative;
-    z-index: 1;
-    font-size: clamp(0.6rem, 2.2vw, 0.72rem);
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
+.hero-main {
+  position: relative; z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 24px 24px;
+  gap: 0;
+}
 
-  .hero-title {
-    position: relative;
-    z-index: 1;
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(2.6rem, 11vw, 7rem);
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    color: var(--white);
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-    word-break: keep-all;
-  }
+.date-stamp {
+  font-size: 0.62rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: up 0.6s 0.1s forwards;
+}
 
-  .hero-title em {
-    display: block;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 0.5em;
-    color: var(--red2);
-    margin-top: 10px;
-    letter-spacing: 0.04em;
-  }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.9rem, 11.5vw, 6rem);
+  font-weight: 700;
+  line-height: 0.95;
+  color: var(--white);
+  opacity: 0;
+  animation: up 0.6s 0.22s forwards;
+}
 
-  .divider {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 32px 0;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-    width: min(320px, 80vw);
-  }
+.hero-title em {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.46em;
+  color: var(--red);
+  margin-top: 12px;
+  line-height: 1.1;
+}
 
-  .divider-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold));
-  }
-  .divider-line.right {
-    background: linear-gradient(to left, transparent, var(--gold));
-  }
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(260px, 72vw);
+  margin: 22px 0 20px;
+  opacity: 0;
+  animation: up 0.6s 0.36s forwards;
+}
+.dline {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(218,26,50,0.6));
+}
+.dline.r {
+  background: linear-gradient(to left, transparent, rgba(218,26,50,0.6));
+}
+.dheart {
+  font-size: 1.2rem;
+  animation: beat 2s ease-in-out infinite;
+}
+@keyframes beat {
+  0%,100% { transform: scale(1); }
+  30%     { transform: scale(1.35); }
+  60%     { transform: scale(1.1); }
+}
 
-  .divider-heart {
-    font-size: 1.3rem;
-    animation: beat 2s ease-in-out infinite;
-    flex-shrink: 0;
-  }
+.hero-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--soft);
+  max-width: 340px;
+  line-height: 1.68;
+  opacity: 0;
+  animation: up 0.6s 0.48s forwards;
+}
 
-  @keyframes beat {
-    0%, 100% { transform: scale(1); }
-    30%       { transform: scale(1.25); }
-    60%       { transform: scale(1.1); }
-  }
+/* ── SCROLL INDICATOR ── */
+.scroll-indicator {
+  position: relative; z-index: 2;
+  padding: 20px 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  animation: up 0.6s 1.1s forwards;
+}
 
-  .hero-subtitle {
-    position: relative;
-    z-index: 1;
-    font-size: clamp(0.95rem, 3.5vw, 1.22rem);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--soft);
-    text-align: center;
-    max-width: 440px;
-    line-height: 1.75;
-    padding: 0 8px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
+.scroll-track {
+  width: 36px; height: 20px;
+  border: 1.5px solid rgba(218,26,50,0.5);
+  border-radius: 10px;
+  position: relative;
+  flex-shrink: 0;
+}
+.scroll-thumb {
+  width: 8px; height: 8px;
+  background: var(--red);
+  border-radius: 50%;
+  position: absolute;
+  top: 4px; left: 4px;
+  animation: scrollDown 1.8s ease-in-out infinite;
+}
+@keyframes scrollDown {
+  0%,100% { top: 4px; opacity: 1; }
+  60%     { top: 14px; opacity: 0.4; }
+}
 
-  .scroll-hint {
-    position: absolute;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.4s forwards;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.62rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
+.scroll-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
-  .scroll-arrow {
-    width: 1px;
-    height: 36px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
+/* red bar decoration right side of hero */
+.hero-bar {
+  position: absolute;
+  right: 16px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  opacity: 0;
+  animation: up 0.6s 0.8s forwards;
+}
+.hero-bar span {
+  display: block;
+  width: 3px;
+  background: var(--white);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+.hero-bar span:nth-child(1) { height: 28px; opacity: 0.9; }
+.hero-bar span:nth-child(2) { height: 14px; opacity: 0.5; }
+.hero-bar span:nth-child(3) { height: 8px;  opacity: 0.25; }
 
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50%       { opacity: 1;   transform: scaleY(1.2); }
-  }
+/* ══════════════════════════════
+   CONTENT
+══════════════════════════════ */
+.content {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 52px 20px 60px;
+}
 
-  /* ── LETTER SECTION ── */
-  .letter-section {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 72px 24px 80px;
-  }
+.tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 32px;
+  display: flex; align-items: center; gap: 12px;
+}
+.tag::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--border), transparent);
+}
 
-  .section-label {
-    font-size: clamp(0.6rem, 2vw, 0.68rem);
-    letter-spacing: 0.38em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+.rule {
+  padding: 30px 0;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 0 18px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s, transform 0.55s;
+}
+.rule.visible { opacity: 1; transform: translateY(0); }
 
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, var(--gold), transparent);
-  }
+.num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 5.5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--ember);
+  opacity: 0.35;
+  line-height: 1;
+  text-align: right;
+  padding-top: 2px;
+  user-select: none;
+}
 
-  /* ── RULES ── */
-  .rules-grid { display: grid; gap: 0; }
+.rule-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.12rem, 4.2vw, 1.48rem);
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 9px;
+  line-height: 1.22;
+}
+.rule-title em {
+  font-style: italic;
+  color: var(--red);
+}
 
-  .rule-item {
-    display: grid;
-    grid-template-columns: 52px 1fr;
-    gap: 0 24px;
-    padding: 44px 0;
-    border-top: 1px solid rgba(212,175,106,0.13);
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s, transform 0.7s;
-  }
+.rule-text {
+  font-size: clamp(0.95rem, 3.3vw, 1.04rem);
+  font-weight: 300;
+  color: var(--soft);
+  line-height: 1.8;
+}
+.rule-text strong {
+  color: var(--white);
+  font-weight: 400;
+  font-style: italic;
+}
 
-  .rule-item.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ══════════════════════════════
+   FINALE
+══════════════════════════════ */
+.finale {
+  padding: 0 20px 72px;
+  text-align: center;
+  position: relative;
+}
 
-  .rule-number {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 7vw, 3.5rem);
-    font-weight: 700;
-    color: rgba(192,57,43,0.22);
-    line-height: 1;
-    text-align: right;
-    padding-top: 4px;
-    user-select: none;
-  }
+/* full-width red band */
+.finale-band {
+  background: linear-gradient(135deg, var(--ember) 0%, var(--red) 100%);
+  padding: 52px 24px;
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.finale-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
 
-  .rule-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.15rem, 4.5vw, 1.6rem);
-    font-weight: 400;
-    color: var(--white);
-    margin-bottom: 12px;
-    line-height: 1.25;
-  }
+.fq {
+  position: relative; z-index: 1;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 5vw, 2.2rem);
+  font-style: italic; font-weight: 400;
+  line-height: 1.48;
+  color: var(--white);
+  max-width: 540px;
+  margin: 0 auto;
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+.fq.visible { opacity: 1; transform: translateY(0); }
 
-  .rule-title em {
-    font-style: italic;
-    color: var(--red2);
-  }
+.open-q {
+  display: block;
+  font-size: 4rem; line-height: 0.55;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 16px;
+  font-style: normal;
+}
 
-  .rule-text {
-    font-size: clamp(0.98rem, 3.2vw, 1.1rem);
-    font-weight: 300;
-    color: var(--soft);
-    line-height: 1.8;
-  }
+.sig {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.7s 0.2s, transform 0.7s 0.2s;
+}
+.sig.visible { opacity: 1; transform: translateY(0); }
 
-  .rule-text .highlight {
-    color: var(--white);
-    font-style: italic;
-  }
+.sig-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 3.8vw, 1.4rem);
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.sig-date {
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
 
-  /* ── FINALE ── */
-  .finale {
-    position: relative;
-    padding: 80px 24px 100px;
-    text-align: center;
-    overflow: hidden;
-  }
+footer {
+  text-align: center;
+  padding: 22px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
-  .finale-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 65% 75% at 50% 50%, rgba(140,20,15,0.22) 0%, transparent 70%);
-  }
+/* ══════════════════════════════
+   FLOATING HEARTS
+══════════════════════════════ */
+.hearts { position: fixed; inset: 0; pointer-events: none; z-index: 500; overflow: hidden; }
+.fh { position: absolute; bottom: -50px; opacity: 0; }
+@keyframes fup {
+  0%   { transform: translateY(0) rotate(-6deg); opacity: 0; }
+  8%   { opacity: 0.6; }
+  88%  { opacity: 0.2; }
+  100% { transform: translateY(-108vh) rotate(10deg); opacity: 0; }
+}
 
-  .finale-quote {
-    position: relative;
-    z-index: 1;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.3rem, 5.5vw, 2.8rem);
-    font-weight: 400;
-    font-style: italic;
-    line-height: 1.45;
-    color: var(--white);
-    max-width: 600px;
-    margin: 0 auto 44px;
-    padding: 0 4px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s, transform 0.8s;
-  }
+@keyframes up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-  .finale-quote.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .finale-quote::before {
-    content: '"';
-    display: block;
-    font-size: 4.5rem;
-    line-height: 0.6;
-    color: rgba(192,57,43,0.35);
-    margin-bottom: 20px;
-  }
-
-  .finale-sig {
-    position: relative;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s 0.3s, transform 0.8s 0.3s;
-  }
-
-  .finale-sig.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .sig-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
-    font-style: italic;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-
-  .sig-date {
-    font-size: clamp(0.62rem, 2vw, 0.73rem);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* ── FLOATING HEARTS ── */
-  .hearts-container {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 100;
-    overflow: hidden;
-  }
-
-  .float-heart {
-    position: absolute;
-    bottom: -60px;
-    opacity: 0;
-    animation: floatUp linear forwards;
-  }
-
-  @keyframes floatUp {
-    0%   { transform: translateY(0) rotate(0deg);       opacity: 0; }
-    10%  { opacity: 0.55; }
-    90%  { opacity: 0.25; }
-    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-  }
-
-  /* ── BOTTOM ── */
-  .bottom-ornament {
-    text-align: center;
-    padding: 32px 20px;
-    border-top: 1px solid rgba(212,175,106,0.13);
-    color: var(--muted);
-    font-size: clamp(0.6rem, 2vw, 0.73rem);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── MOBILE ── */
-  @media (max-width: 400px) {
-    .hero-title { font-size: clamp(2.2rem, 13vw, 3rem); }
-    .rule-item  { grid-template-columns: 36px 1fr; gap: 0 16px; }
-    .rule-number { font-size: 1.8rem; }
-    .letter-section { padding: 56px 16px 64px; }
-    .finale { padding: 60px 16px 80px; }
-  }
+@media (max-width: 360px) {
+  .hero-title { font-size: clamp(2.5rem, 13.5vw, 3rem); }
+  .rule { grid-template-columns: 32px 1fr; gap: 0 12px; }
+  .num { font-size: 1.5rem; }
+  .hero-accent { width: 35%; }
+}
 </style>
 </head>
 <body>
 
-<div class="hearts-container" id="heartsContainer"></div>
+<div class="hearts" id="hearts"></div>
 
+<!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <p class="date-stamp">8 İyun 2026 &nbsp;·&nbsp; Ad Günün Mübarək</p>
-  <h1 class="hero-title">
-    Atamdan<br>Öyrəndiklərim
-    <em>Ən Sevdiyi Qızından</em>
-  </h1>
-  <div class="divider">
-    <span class="divider-line"></span>
-    <span class="divider-heart">❤️</span>
-    <span class="divider-line right"></span>
+  <div class="hero-accent"></div>
+  <div class="hero-bar">
+    <span></span><span></span><span></span>
   </div>
-  <p class="hero-subtitle">Bəzən ən dərin sevgi ən az sözlə ifadə olunur. Amma bu gün, hər şeyi demək istəyirəm.</p>
-  <div class="scroll-hint">
-    <div class="scroll-arrow"></div>
+
+  <div class="hero-main">
+    <p class="date-stamp">8 İyun 2026 · Ad Günün Mübarək</p>
+
+    <h1 class="hero-title">
+      Atamdan<br>Öyrən&shy;diklərim
+      <em>Ən Sevdiyi Qızından</em>
+    </h1>
+
+    <div class="divider">
+      <span class="dline"></span>
+      <span class="dheart">❤️</span>
+      <span class="dline r"></span>
+    </div>
+
+    <p class="hero-sub">Bəzən ən dərin sevgi ən az sözlə ifadə olunur. Amma bu gün, hər şeyi demək istəyirəm.</p>
   </div>
-</section>
 
-<section class="letter-section">
-  <div class="section-label">Sənin Qızının Gözündən</div>
-
-  <div class="rules-grid">
-
-    <article class="rule-item" data-delay="0">
-      <div class="rule-number">01</div>
-      <div class="rule-content">
-        <h2 class="rule-title">Səssiz &amp; <em>Məğrur Güc</em></h2>
-        <p class="rule-text">
-          Əsl güc çox səsli olmur — bunu sənin hər addımından öyrəndim.
-          Çətin anlarda şikayət etmirsən, dözürsən, çalışırsan.
-          <span class="highlight">Həyatda dik durmağı mənə sən öyrətdin.</span>
-          Sənin səssiz qüdrətin mənim üçün ən böyük nümunədir.
-        </p>
-      </div>
-    </article>
-
-    <article class="rule-item" data-delay="150">
-      <div class="rule-number">02</div>
-      <div class="rule-content">
-        <h2 class="rule-title">Mənim <em>Ən Böyük Şansım</em></h2>
-        <p class="rule-text">
-          Dərslər bəzən çox ağır olur. Amma <span class="highlight">sənin mənimlə fəxr etdiyini düşünmək</span> mənə dünyada başqa heç bir şeyin verə bilmədiyi gücü verir.
-          Sənin qızın olmaq — bu mənim üçün həyatın ən böyük hədiyyəsidir.
-        </p>
-      </div>
-    </article>
-
-    <article class="rule-item" data-delay="300">
-      <div class="rule-number">03</div>
-      <div class="rule-content">
-        <h2 class="rule-title">Sözlə Deyil, <em>Əməllə Sevmək</em></h2>
-        <p class="rule-text">
-          Hər gün "səni sevirəm" deməyə bilərsən — amma mən sənin sevgini
-          <span class="highlight">hər an, hər anımda hiss edirəm.</span>
-          Fədakarlığı, qayğını, əməli sevgini — bunları mənə sən öyrətdin.
-          Sən mənim şapşik atamsan 😊 və mən bu dünyada ən xoşbəxt insanam.
-        </p>
-      </div>
-    </article>
-
+  <!-- scroll cue — bottom of hero grid -->
+  <div class="scroll-indicator">
+    <div class="scroll-track">
+      <div class="scroll-thumb"></div>
+    </div>
+    <span class="scroll-label">Aşağı sürüşdür</span>
   </div>
 </section>
 
+<!-- ══ CONTENT ══ -->
+<section class="content">
+  <p class="tag">Sənin Qızının Gözündən</p>
+
+  <article class="rule" data-delay="0">
+    <div class="num">01</div>
+    <div>
+      <h2 class="rule-title">Səssiz &amp; <em>Məğrur Güc</em></h2>
+      <p class="rule-text">Əsl güc çox səsli olmur — bunu sənin hər addımından öyrəndim. Çətin anlarda şikayət etmirsən, dözürsən, çalışırsan. <strong>Həyatda dik durmağı mənə sən öyrətdin.</strong> Sənin səssiz qüdrətin mənim üçün ən böyük nümunədir.</p>
+    </div>
+  </article>
+
+  <article class="rule" data-delay="110">
+    <div class="num">02</div>
+    <div>
+      <h2 class="rule-title">Mənim <em>Ən Böyük Şansım</em></h2>
+      <p class="rule-text">Dərslər bəzən çox ağır olur. Amma <strong>sənin mənimlə fəxr etdiyini düşünmək</strong> mənə dünyada başqa heç bir şeyin verə bilmədiyi gücü verir. Sənin qızın olmaq — bu mənim üçün həyatın ən böyük hədiyyəsidir.</p>
+    </div>
+  </article>
+
+  <article class="rule" data-delay="220">
+    <div class="num">03</div>
+    <div>
+      <h2 class="rule-title">Sözlə Deyil, <em>Əməllə Sevmək</em></h2>
+      <p class="rule-text">Hər gün "səni sevirəm" deməyə bilərsən — amma mən sənin sevgini <strong>hər an, hər anımda hiss edirəm.</strong> Fədakarlığı, qayğını, əməli sevgini — bunları mənə sən öyrətdin. Sən mənim şapşik atamsan 😊 və mən bu dünyada ən xoşbəxt insanam.</p>
+    </div>
+  </article>
+</section>
+
+<!-- ══ FINALE ══ -->
 <section class="finale">
-  <div class="finale-bg"></div>
-  <p class="finale-quote" id="finaleQuote">
-    Canım atam sənin qızın olduğum üçün çox, çox, çox şanslıyam. Yaxşı ki varsan. Yaxşı ki mənim atamsan. Ad günün mübarək :)
-  </p>
-  <div class="finale-sig" id="finaleSig">
+  <div class="finale-band">
+    <p class="fq" id="fq">
+      <span class="open-q">"</span>
+      Canım atam — sənin qızın olduğum üçün çox, çox, çox şanslıyam. Yaxşı ki varsan. Yaxşı ki mənim atamsan. Ad günün mübarək 🎂
+    </p>
+  </div>
+
+  <div class="sig" id="sig">
     <p class="sig-name">Sonsuz sevgi ilə, Təhminə ❤️</p>
     <p class="sig-date">8 İyun 2026</p>
   </div>
 </section>
 
-<div class="bottom-ornament">Zaur Əliyevə özəl olaraq qızından</div>
+<footer>Sənin kimi dady bir dənədi — o da məndədi</footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = entry.target.dataset.delay || 0;
-        setTimeout(() => entry.target.classList.add('visible'), +delay);
-        observer.unobserve(entry.target);
-      }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      setTimeout(() => e.target.classList.add('visible'), +(e.target.dataset.delay||0));
+      io.unobserve(e.target);
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rule, #fq, #sig').forEach(el => io.observe(el));
 
-  document.querySelectorAll('.rule-item, .finale-quote, .finale-sig').forEach(el => observer.observe(el));
-
-  const heartSymbols = ['❤️','🤍','💛','♥','❣️'];
-  const container = document.getElementById('heartsContainer');
-
-  function spawnHeart() {
+  const H = ['❤️','🤍','❣️','♥'];
+  const box = document.getElementById('hearts');
+  function pop() {
     const h = document.createElement('span');
-    h.className = 'float-heart';
-    h.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-    h.style.left = Math.random() * 100 + 'vw';
-    const duration = 8 + Math.random() * 10;
-    const delay    = Math.random() * 4;
-    h.style.fontSize  = (0.8 + Math.random() * 1.1) + 'rem';
-    h.style.animation = `floatUp ${duration}s ${delay}s linear forwards`;
-    container.appendChild(h);
-    setTimeout(() => h.remove(), (duration + delay) * 1000 + 200);
+    h.className = 'fh';
+    h.textContent = H[Math.floor(Math.random()*H.length)];
+    h.style.left = Math.random()*96+'vw';
+    const d = 8+Math.random()*9, dl = Math.random()*3;
+    h.style.fontSize = (0.7+Math.random()*1.1)+'rem';
+    h.style.animation = `fup ${d}s ${dl}s linear forwards`;
+    box.appendChild(h);
+    setTimeout(()=>h.remove(),(d+dl)*1000+300);
   }
-
-  for (let i = 0; i < 5; i++) spawnHeart();
-  setInterval(spawnHeart, 2400);
+  for(let i=0;i<5;i++) pop();
+  setInterval(pop, 2800);
 </script>
 </body>
 </html>
