@@ -46,7 +46,7 @@ The page presents three life lessons I learned from him, written as personal ref
 
 ##  Live Demo
 
-Open `index.html` directly in any browser — no build step, no server needed.
+[Open.](https://dad-birthday-zkhk.vercel.app/)
 
 ---
 
